@@ -1,0 +1,46 @@
+name: CI/CD with SonarQube and ZAP
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install flask gunicorn
+
+      - name: Start Flask App
+        run: |
+          gunicorn -w 4 app:app --daemon
+
+      - name: Run SonarQube Scan
+        uses: sonarsource/sonarqube-scan-action@v1
+        with:
+          projectBaseDir: .
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
+      # - name: Run OWASP ZAP Baseline Scan
+      #   run: |
+      #     docker run --network="host" owasp/zap2docker-stable zap-baseline.py -t http://localhost:8000 -r zap_report.html
+
+      # - name: Upload ZAP Report
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: zap-report
+      #     path: zap_report.html
