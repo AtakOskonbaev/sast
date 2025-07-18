@@ -14,9 +14,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install dependencies
+      - name: Create and activate virtual environment
         run: |
+          python -m venv .venv
+          source .venv/bin/activate
+          pip install --upgrade pip
           pip install flask gunicorn
+
+      - name: Start Flask App in venv
+        run: |
+          source .venv/bin/activate
+          gunicorn -w 4 app:app --daemon
+
 
       - name: Start Flask App
         run: |
