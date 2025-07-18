@@ -37,7 +37,7 @@ jobs:
           projectBaseDir: .
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_HOST_URL: http://192.168.157.136:9000
 
       # - name: Run OWASP ZAP Baseline Scan
       #   run: |
