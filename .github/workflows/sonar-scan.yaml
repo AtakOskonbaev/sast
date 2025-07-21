@@ -34,9 +34,10 @@ jobs:
       - name: Run SonarScanner
         run: |
           /home/archuser/Downloads/sonar-scanner/sonar-scanner-7.1.0.4889-linux-x64/bin/sonar-scanner \
-            -Dsonar.projectKey=${{ secrets.SONAR_TOKEN }} \
+            -Dsonar.projectKey=Flask_app \
             -Dsonar.sources=. \
             -Dsonar.host.url=http://172.17.0.1:9000 \
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
 
 
