@@ -31,25 +31,14 @@ jobs:
         run: |
           gunicorn -w 4 app:app --daemon
 
-      - name: Install Java 17
-        uses: actions/setup-java@v3
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-
-      - name: Download SonarScanner CLI
-        run: |
-          wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
-          unzip sonar-scanner-cli-5.0.1.3006-linux.zip
-          mv sonar-scanner-5.0.1.3006-linux sonar-scanner
-
       - name: Run SonarScanner
         run: |
-          ./sonar-scanner/bin/sonar-scanner \
-            -Dsonar.projectKey=my_project_key \
+          /home/archuser/Downloads/sonar-scanner/sonar-scanner-7.1.0.4889-linux-x64/bin/sonar-scanner \
+            -Dsonar.projectKey=your_project_key \
             -Dsonar.sources=. \
             -Dsonar.host.url=http://172.17.0.1:9000 \
             -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+
 
 
       # - name: Run OWASP ZAP Baseline Scan
