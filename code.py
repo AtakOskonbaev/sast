@@ -47,9 +47,6 @@ def path_traversal():
 
     return data
 
-
-
-
     
 
 @app.route('/insecure_cookie', methods=['GET'])
