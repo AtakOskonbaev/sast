@@ -6,6 +6,7 @@ app = Flask(__name__)
 
 # Hardcoded secret (Sensitive Data Exposure)
 SECRET_KEY = 'hardcoded_super_secret_key'
+PASSWORD = 'skysoc'
 
 @app.route('/unsafe_sql', methods=['GET'])
 def unsafe_sql():
